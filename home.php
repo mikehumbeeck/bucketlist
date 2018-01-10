@@ -93,16 +93,16 @@ if (!isset($_SESSION['auth'])) {
                 <div class="list">
 
                     <?php
-                    $ds1 = new DataSet($sql = "SELECT * FROM list", $conn, $load = true);
-                    foreach ($ds1->rows as $row) {
-                        //echo "first_name: " . $row["first_name"]. " - last_name: " . $row["last_name"] . " - email: " . $row["email"] . "<br>"; //output
-                        //print_r($row);
+                    $userid = $_SESSION['user_id'];
+                    $ds1 = new DataSet($sql = "SELECT * FROM list WHERE lis_user_id = '$userid'", $conn, $load = true);
+                    foreach ($ds1->rows as $row) { ?>
 
-                    }
-                    ?>
-                    <h4 class="text-center"><?php echo "=== " . $row["lis_subject"] . " ===" ?></h4>
-                    <p><?php echo $row["lis_place"] . " - " . $row["lis_theme"] ?></p>
-                    <p><?php echo $row["lis_description"]; ?></p>
+                        <h4 class="text-center"><?php echo "=== " . $row["lis_subject"] . " ===" ?></h4>
+                        <p><?php echo $row["lis_place"] . " - " . $row["lis_theme"] ?></p>
+                        <p><?php echo $row["lis_description"]; ?></p>
+
+                    <?php } ?>
+
 
                 </div>
             </div>
