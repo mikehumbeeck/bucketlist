@@ -1,0 +1,37 @@
+.index {
+    margin: 0;
+    padding: 0;
+    background: url(../img/bg01.jpg);
+    background-size: cover;
+}
+
+.logo {
+    margin: 0 auto;
+}
+
+.title {
+
+    color: #FFF;
+    text-align: center;
+    font-size: 3em;
+    letter-spacing: 2px;
+}
+
+.boxtitles {
+    padding-bottom: 15px;
+    text-align: center;
+}
+
+.control-label {
+    padding-top: 10px;
+}
+
+.boxsubmit {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    text-align: center;
+}
+
+.carousel-inner img {
+    width: 100%;
+}

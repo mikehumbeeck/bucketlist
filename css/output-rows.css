@@ -1,0 +1,16 @@
+/*-------OUTPUT - HOME-------*/
+.list {
+    width: 80%;
+    margin: 0 auto;
+    background: rgba(0,0,0,.5);
+    margin-top: 60px;
+}
+
+.list h4 {
+    color: #fff;
+
+}
+.list p {
+    color: #fff;
+    text-align: center;
+}

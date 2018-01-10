@@ -1,0 +1,21 @@
+.inputTable {
+    width: 80%;
+    margin: 0 auto;
+    padding: 60px 40px;
+    padding-top: 30px;
+    background: rgba(0,0,0,.5);
+}
+
+.inputTitle {
+    color: black;
+    font-size: 3em;
+    padding-bottom: 20px;
+}
+
+.btn-group-lg>.btn, .btn-lg {
+    font-size: 4em;
+}
+.btn-default {
+    background: none;
+    border: none;
+}
