@@ -112,3 +112,6 @@ if (!isset($_SESSION['auth'])) {
 </main>
 </body>
 </html>
+<?php
+mysqli_close($conn);
+?>

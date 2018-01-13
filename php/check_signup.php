@@ -14,8 +14,13 @@ if (isset($_POST["register"])) {
         exit;
     } else {
         $sc = new SQLCommand($sql = "insert into accounts.users SET first_name='$firstName' , last_name='$lastName' , email='$email' , password='$hashtpwd'", $conn, $execute = true);
+        if ($sc) {
+            echo "Success!";
+        } else {
+            //failure
+            die("Database query failed. " . mysqli_error($conn));
+        }
     }
-
 
 }
 ?>
