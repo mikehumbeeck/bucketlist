@@ -26,6 +26,7 @@ if (!isset($_SESSION['auth'])) {
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/form-home.css">
     <link rel="stylesheet" href="css/output-rows.css">
+    <link rel="stylesheet" href="css/theme-gallery.css">
 
 </head>
 <body class="home">
@@ -63,7 +64,7 @@ if (!isset($_SESSION['auth'])) {
                     </div>
                     <div class="form-group col-md-6">
                         <label for="subject">Subject</label>
-                        <input type="text" class="form-input" name="subject" placeholder="Subject">
+                        <input type="text" class="form-input" name="subject"  placeholder="Subject">
                     </div>
                 </div>
                 <div class="row">
@@ -89,6 +90,50 @@ if (!isset($_SESSION['auth'])) {
     <div class="container">
         <hr>
         <div class="row">
+            <div class="col-md-3 responsive">
+                <div class="gallery">
+                    <img class="img-rounded" src="img/themes/travelb.jpg" alt="Card image cap">
+                </div>
+            </div>
+            <div class="col-md-3 responsive">
+                <div class="gallery">
+                    <img class="img-rounded" src="img/themes/fooddrinksb.jpg" alt="Card image cap">
+                </div>
+            </div>
+            <div class="col-md-3 responsive">
+                <div class="gallery">
+                    <img class="img-rounded" src="img/themes/relationb.jpg" alt="Card image cap">
+                </div>
+            </div>
+            <div class="col-md-3 responsive">
+                <div class="gallery">
+                    <img class="img-rounded" src="img/themes/visitingb.jpg" alt="Card image cap">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 responsive">
+                <div class="gallery">
+                    <img class="img-rounded" src="img/themes/sportb.jpg" alt="Card image cap">
+                </div>
+            </div>
+            <div class="col-md-3 responsive">
+                <div class="gallery">
+                    <img class="img-rounded" src="img/themes/randomb.jpg" alt="Card image cap">
+                </div>
+            </div>
+            <div class="col-md-3 responsive">
+                <div class="gallery">
+                    <img class="img-rounded" src="img/themes/adventureb.jpg" alt="Card image cap">
+                </div>
+            </div>
+            <div class="col-md-3 responsive">
+                <div class="gallery">
+                    <img class="img-rounded" src="img/themes/careerb.jpg" alt="Card image cap">
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-md-12">
                 <div class="list">
 
@@ -104,7 +149,7 @@ if (!isset($_SESSION['auth'])) {
                             </div>
                             <div class="col-md-2">
                                 <div class="text-right">
-                                    <button type="submit" name="update" class="btn btn-default">Update</button>
+                                    <button type="submit" name="update" value="<?php echo $row["lis_id"]; ?>" class="btn btn-default">Update</button>
                                     <button type="submit" name="delete" class="btn btn-default">Delete</button>
                                     <button type="submit" name="check" class="btn btn-default">Check</button>
                                 </div>
