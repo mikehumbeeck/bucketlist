@@ -49,7 +49,7 @@ if (!isset($_SESSION['auth'])) {
 
 </header>
 <main>
-    <div class="container">
+    <div class="container" id="formhome">
         <h1 class="text-center">Welkom <?php echo $_SESSION['user_name']; ?></h1>
         <br>
         <div class="inputTable">
@@ -64,7 +64,7 @@ if (!isset($_SESSION['auth'])) {
                     </div>
                     <div class="form-group col-md-6">
                         <label for="subject">Subject</label>
-                        <input type="text" class="form-input" name="subject"  placeholder="Subject">
+                        <input type="text" class="form-input" name="subject" placeholder="Subject">
                     </div>
                 </div>
                 <div class="row">
@@ -87,50 +87,91 @@ if (!isset($_SESSION['auth'])) {
             </form>
         </div>
     </div>
-    <div class="container">
+    <div class="container" id="themegallery">
         <hr>
         <div class="row">
-            <div class="col-md-3 responsive">
-                <div class="gallery">
-                    <img class="img-rounded" src="img/themes/travelb.jpg" alt="Card image cap">
-                </div>
+            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                <a class="info" href="#">
+                    <div class="hovereffect">
+                        <img class="img-rounded responsive image" src="img/themes/travelb.jpg" alt="Card image cap">
+                        <div class="middle">
+                            <h2 class="text">Travel</h2>
+                        </div>
+                    </div>
+                </a>
             </div>
-            <div class="col-md-3 responsive">
-                <div class="gallery">
-                    <img class="img-rounded" src="img/themes/fooddrinksb.jpg" alt="Card image cap">
-                </div>
+
+            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                <a class="info" href="#">
+                    <div class="hovereffect">
+                        <img class="img-rounded responsive image" src="img/themes/fooddrinksb.jpg" alt="Card image cap">
+                        <div class="middle">
+                            <h2 class="text">Food & drinks</h2>
+                        </div>
+                    </div>
+                </a>
             </div>
-            <div class="col-md-3 responsive">
-                <div class="gallery">
-                    <img class="img-rounded" src="img/themes/relationb.jpg" alt="Card image cap">
-                </div>
+            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                <a class="info" href="#">
+                    <div class="hovereffect">
+                        <img class="img-rounded responsive image" src="img/themes/relationb.jpg" alt="Card image cap">
+                        <div class="middle">
+                            <h2 class="text">Relation</h2>
+                        </div>
+                    </div>
+                </a>
             </div>
-            <div class="col-md-3 responsive">
-                <div class="gallery">
-                    <img class="img-rounded" src="img/themes/visitingb.jpg" alt="Card image cap">
-                </div>
+            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                <a class="info" href="#">
+                    <div class="hovereffect">
+                        <img class="img-rounded responsive image" src="img/themes/visitingb.jpg" alt="Card image cap">
+                        <div class="middle">
+                            <h2 class="text">Visiting</h2>
+                        </div>
+                    </div>
+                </a>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-3 responsive">
-                <div class="gallery">
-                    <img class="img-rounded" src="img/themes/sportb.jpg" alt="Card image cap">
-                </div>
+            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                <a class="info" href="#">
+                    <div class="hovereffect">
+                        <img class="img-rounded responsive image" src="img/themes/sportb.jpg" alt="Card image cap">
+                        <div class="middle">
+                            <h2 class="text">Sport</h2>
+                        </div>
+                    </div>
+                </a>
             </div>
-            <div class="col-md-3 responsive">
-                <div class="gallery">
-                    <img class="img-rounded" src="img/themes/randomb.jpg" alt="Card image cap">
-                </div>
+            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                <a class="info" href="#">
+                    <div class="hovereffect">
+                        <img class="img-rounded responsive image" src="img/themes/randomb.jpg" alt="Card image cap">
+                        <div class="middle">
+                            <h2 class="text">Random</h2>
+                        </div>
+                    </div>
+                </a>
             </div>
-            <div class="col-md-3 responsive">
-                <div class="gallery">
-                    <img class="img-rounded" src="img/themes/adventureb.jpg" alt="Card image cap">
-                </div>
+            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                <a class="info" href="#">
+                    <div class="hovereffect">
+                        <img class="img-rounded responsive image" src="img/themes/adventureb.jpg" alt="Card image cap">
+                        <div class="middle">
+                            <h2 class="text">Adventure</h2>
+                        </div>
+                    </div>
+                </a>
             </div>
-            <div class="col-md-3 responsive">
-                <div class="gallery">
-                    <img class="img-rounded" src="img/themes/careerb.jpg" alt="Card image cap">
-                </div>
+            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                <a class="info" href="#">
+                    <div class="hovereffect">
+                        <img class="img-rounded responsive image" src="img/themes/careerb.jpg" alt="Card image cap">
+                        <div class="middle">
+                            <h2 class="text">Career</h2>
+                        </div>
+                    </div>
+                </a>
             </div>
         </div>
         <div class="row">
@@ -149,7 +190,9 @@ if (!isset($_SESSION['auth'])) {
                             </div>
                             <div class="col-md-2">
                                 <div class="text-right">
-                                    <button type="submit" name="update" value="<?php echo $row["lis_id"]; ?>" class="btn btn-default">Update</button>
+                                    <button type="submit" name="update" value="<?php echo $row["lis_id"]; ?>"
+                                            class="btn btn-default">Update
+                                    </button>
                                     <button type="submit" name="delete" class="btn btn-default">Delete</button>
                                     <button type="submit" name="check" class="btn btn-default">Check</button>
                                 </div>
