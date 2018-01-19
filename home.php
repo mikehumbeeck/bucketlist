@@ -1,7 +1,19 @@
-<?php require_once("php/database_functions.php");
+<?php
+require_once("php/database_functions.php");
+require_once("php/update_list.php");
+require_once("php/is_authenticated.php");
 
-if (!isset($_SESSION['auth'])) {
-    header('location:' . ROOT_URL);
+if (isset($_GET["list_id_upd"])) {
+    //Ophalen van list-items
+    $list_item = getlistitem($_GET["list_id_upd"]);
+    //List item gebruiken om formulier in te vullen in formulier
+
+
+}
+if (isset($_GET["list_id_del"])) {
+    $delitem = deletelistitem($_GET["list_id_del"]);
+    header('Location:' . ROOT_URL . 'home.php');
+
 }
 ?>
 
@@ -27,6 +39,7 @@ if (!isset($_SESSION['auth'])) {
     <link rel="stylesheet" href="css/form-home.css">
     <link rel="stylesheet" href="css/output-rows.css">
     <link rel="stylesheet" href="css/theme-gallery.css">
+    <link rel="stylesheet" href="css/hamburger.css">
 
 </head>
 <body class="home">
@@ -37,21 +50,45 @@ if (!isset($_SESSION['auth'])) {
 
 <!-- Add your site or application content here -->
 <script src="js/vendor/modernizr-3.5.0.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"
-        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-<script>window.jQuery || document.write('<script src="js/vendor/jquery-3.2.1.min.js"><\/script>')</script>
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="js/plugins.js"></script>
 <script src="js/main.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
+<script src="js/hamburger.js"></script>
+
 <header>
 
 </header>
 <main>
     <div class="container" id="formhome">
-        <h1 class="text-center">Welkom <?php echo $_SESSION['user_name']; ?></h1>
+        <div class="row">
+            <div class="col-md-1">
+                <img class="logo responsive" src="img/logo/logo04Black.png" alt="logo">
+            </div>
+            <div class="col-md-9">
+                <h1 class="welkom">Welkom <?php echo $_SESSION['user_name']; ?></h1>
+            </div>
+            <div class="col-md-2">
+                <div class="dropdown">
+                    <button id="nav-icon4" class="" data-toggle="dropdown">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+
+                    <div class="dropdown-menu">
+                        <a href="php/logout.php">Log out</a>
+                    </div>
+                </div>
+            </div>
+        </div>
         <br>
+
+        <hr>
+
         <div class="inputTable">
             <div class="col-md-12">
                 <h3 class="inputTitle text-center">Time for a new adventure</h3>
@@ -60,17 +97,23 @@ if (!isset($_SESSION['auth'])) {
                 <div class="row">
                     <div class="form-group col-md-6">
                         <label for="theme">Theme</label>
-                        <input type="text" class="form-input" name="theme" placeholder="Theme">
+                        <input type="text" class="form-input" name="theme" placeholder="Theme"
+                               value="<?php echo $list_item["theme"] ?>">
+                        <?php if (isset($_GET["list_id_upd"])) { ?>
+                            <input type="hidden" name="listid" value="<?php echo $_GET["list_id_upd"] ?>">
+                        <?php } ?>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="subject">Subject</label>
-                        <input type="text" class="form-input" name="subject" placeholder="Subject">
+                        <input type="text" class="form-input" name="subject" placeholder="Subject"
+                               value="<?php echo $list_item["subject"] ?>">
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-md-6">
                         <label for="place">Place</label>
-                        <input type="text" class="form-input" name="place" placeholder="Place">
+                        <input type="text" class="form-input" name="place" placeholder="Place"
+                               value="<?php echo $list_item["place"] ?>">
                     </div>
                     <div class="col-md-6 text-right">
                         <button type="submit" name="check" class="btn btn-default btn-lg">
@@ -81,7 +124,8 @@ if (!isset($_SESSION['auth'])) {
                 <div class="row">
                     <div class="form-group col-md-12">
                         <label for="description">Description</label>
-                        <textarea class="form-input" name="description" placeholder="Description"> </textarea>
+                        <textarea class="form-input" name="description"
+                                  placeholder="Description"><?php echo $list_item["description"] ?></textarea>
                     </div>
                 </div>
             </form>
@@ -131,8 +175,6 @@ if (!isset($_SESSION['auth'])) {
                     </div>
                 </a>
             </div>
-        </div>
-        <div class="row">
             <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
                 <a class="info" href="#">
                     <div class="hovereffect">
@@ -177,7 +219,6 @@ if (!isset($_SESSION['auth'])) {
         <div class="row">
             <div class="col-md-12">
                 <div class="list">
-
                     <?php
                     $userid = $_SESSION['user_id'];
                     $ds1 = new DataSet($sql = "SELECT * FROM list WHERE lis_user_id = '$userid'", $conn, $load = true);
@@ -190,18 +231,20 @@ if (!isset($_SESSION['auth'])) {
                             </div>
                             <div class="col-md-2">
                                 <div class="text-right">
-                                    <button type="submit" name="update" value="<?php echo $row["lis_id"]; ?>"
-                                            class="btn btn-default">Update
-                                    </button>
-                                    <button type="submit" name="delete" class="btn btn-default">Delete</button>
+                                    <a href="<?php echo ROOT_URL ?>home.php?list_id_upd=<?php echo $row["lis_id"] ?>">
+                                        <button type="submit" name="update"
+                                                class="btn btn-default">Update
+                                        </button>
+                                    </a>
+                                    <a href="<?php echo ROOT_URL ?>home.php?list_id_del=<?php echo $row["lis_id"] ?>">
+                                        <button type="submit" name="delete" class="btn btn-default">Delete</button>
+                                    </a>
                                     <button type="submit" name="check" class="btn btn-default">Check</button>
                                 </div>
                             </div>
                         </div>
                         <hr>
-
                     <?php } ?>
-
                 </div>
             </div>
         </div>
