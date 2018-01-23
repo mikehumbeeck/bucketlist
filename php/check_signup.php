@@ -11,19 +11,25 @@ if (isset($_POST["register"])) {
 
     if ($userexcist->result->num_rows > 0) {
         print "User already exist";
-        exit;
+        header('location:' . ROOT_URL);;
     } else {
         $sc = new SQLCommand($sql = "insert into accounts.users SET first_name='$firstName' , last_name='$lastName' , email='$email' , password='$hashtpwd'", $conn, $execute = true);
         if ($sc) {
             echo "Success!";
+            header('location:' . ROOT_URL);
         } else {
             //failure
             die("Database query failed. " . mysqli_error($conn));
         }
     }
+    print "Welcome " . $_POST["firstname"] . "<br>";
+    print "Your email address is: " . $_POST["email"] . "<br>";
+
+
+
+
 
 }
 ?>
-<!--Dit in een apart pagina opmaken. Dit is html-->
-Welcome <?php echo $_POST["firstname"]; ?><br>
-Your email address is: <?php echo $_POST["email"]; ?>
+
+

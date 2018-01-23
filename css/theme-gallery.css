@@ -3,6 +3,12 @@
     padding-left: 5px;
 }
 
+#themetitle span {
+    color: black;
+    font-size: 1.6em;
+    font-weight: bold;
+}
+
 .image {
     opacity: 1;
     display: block;
@@ -27,6 +33,9 @@
 
 .hovereffect:hover .image {
     opacity: 0.3;
+    -ms-transform: scale(1.1); /* IE 9 */
+    -webkit-transform: scale(1.1); /* Safari 3-8 */
+    transform: scale(1.1);
 }
 
 .hovereffect:hover .middle {
@@ -38,4 +47,8 @@
     color: white;
     font-size: 16px;
     padding: 16px 32px;
+}
+
+.regular div {
+    padding: 0 2px;
 }
