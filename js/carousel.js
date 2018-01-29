@@ -32,8 +32,11 @@ $(document).on('ready', function () {
         $("#themetitle span").html(thema);
     }).on("click", function () {
         $(".list .row").hide();
-        $(".list ." + thema).fadeIn("slow");
-
+        if (thema === "All"){
+            $(".list .row" ).fadeIn("slow");
+        } else {
+            $(".list ." + thema).fadeIn("slow");
+        }
     })
 
 

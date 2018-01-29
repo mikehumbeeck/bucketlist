@@ -38,7 +38,7 @@
 <main>
     <!-- sign-up-->
     <div class="container">
-        <h2 class="title">Jobs fill your pocket,<br> adventures fill your soul.</h2>
+        <h2 class="title">Start here <br> to make your favorite list.</h2>
         <div class="inputBox">
 
             <div class="boxtitles">
@@ -50,18 +50,17 @@
                   method="post" role="form">
 
                 <div class="form-group">
-                    <label for="email" class="col-md-3 control-label">Email</label>
+                    <label for="email" class="col-md-3 control-label">Email<sup>*</sup></label>
 
-                    <input type="text" class="form-input" name="email"
-                           placeholder="Email Address">
-
+                    <input type="email" class="form-input" name="email"
+                           placeholder="Email Address" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="firstname" class="col-md-3 control-label">First Name</label>
+                    <label for="firstname" class="col-md-3 control-label">First Name<sup>*</sup></label>
 
                     <input type="text" class="form-input" name="firstname"
-                           placeholder="First Name">
+                           placeholder="First Name" required>
 
                 </div>
                 <div class="form-group">
@@ -71,10 +70,10 @@
 
                 </div>
                 <div class="form-group">
-                    <label for="password" class="col-md-3 control-label">Password</label>
+                    <label for="password" class="col-md-3 control-label">Password<sup>*</sup></label>
 
                     <input type="password" class="form-input" name="password"
-                           placeholder="Password">
+                           placeholder="Password" required>
 
                 </div>
 

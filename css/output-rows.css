@@ -1,15 +1,25 @@
 /*-------OUTPUT - HOME-------*/
+.listbackground {
+    border: 1px solid black;
+    margin: 0.5em 0.1em;
+}
+
 .list {
     width: 80%;
-    margin: 0 auto;
-    margin-top: 60px;
+    margin: 30px auto;
+
 }
 
 .list .row {
-    background: rgba(0,0,0,.5);
+    background: #337ab7;
     padding: 5px 0;
     margin-bottom: 10px;
-    min-height: 200px;
+    min-height: 150px;
+}
+
+.list .row:nth-of-type(even) {
+    background: rgba(0,0,0,.5);
+
 }
 
 .list .date {
@@ -21,38 +31,64 @@
     color: #fff;
     font-size: 2em;
     text-transform: uppercase;
-
 }
+
+.list a {
+    color: #fff;
+}
+
 .list p {
     color: #fff;
 }
 
-.list .col-md-8 p:nth-of-type(1){
-    font-weight: bold;
+.list .description {
+    margin-left: -15px;
 }
+
 
 .list .glyphicon {
     font-size: 2em;
     color: #FFF;
+    -webkit-transition: color .5s ease-out;
+    -moz-transition: color .5s ease-out;
+    -o-transition: color .5s ease-out;
+    transition: color .5s ease-out;
 }
 
-.list .text-right span {
+
+.list .flow {
+    display: flex;
+    justify-content: space-between;
+    align-self: flex-end;
+    margin-top: 10px;
+
+}
+
+.list .flow p{
+}
+
+
+.list .flow span {
     border: 1px solid #fff;
     padding: 8px;
 }
 
+.list .glyphicon:hover {
+    color: black;
+}
+
 .home hr {
     border-top: 1px solid black;
-    margin-left: 10px;
 }
 
 h4.strikethrough {
     text-decoration: line-through;
-
     color: #337ab7;
 
 }
 h4 span {
     color: #fff;
 }
+
+
 

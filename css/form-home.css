@@ -1,4 +1,4 @@
-#formhome .logo {
+.logo {
     width: 50%;
     height: auto;
     padding-top: 10px;
@@ -29,9 +29,21 @@
     background: none;
     border: none;
     color: #FFF;
-
 }
 
 .btn-default:hover {
     background: none;
+    color: #337ab7;
+}
+
+.inputTable button {
+    -webkit-transition: color .5s ease-out;
+    -moz-transition: color .5s ease-out;
+    -o-transition: color .5s ease-out;
+    transition: color .5s ease-out;
+}
+
+.inputTable button:hover {
+    color: #337ab7;
+
 }

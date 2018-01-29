@@ -8,6 +8,7 @@ if (isset($_POST["check"])) {
     $subject = $_POST["subject"];
     $place = $_POST["place"];
     $description = $_POST["description"];
+    $link = $_POST["link"];
 
     $userid = $_SESSION['user_id'];//gehaald uit check_login.php
 
@@ -20,7 +21,8 @@ if (isset($_POST["check"])) {
         $sql .= "lis_theme = '{$theme}', ";
         $sql .= "lis_subject = '{$subject}', ";
         $sql .= "lis_place = '{$place}', ";
-        $sql .= "lis_description = '{$description}' ";
+        $sql .= "lis_description = '{$description}', ";
+        $sql .= "lis_link = '{$link}' ";
         $sql .= "WHERE lis_id = '{$listid}'";
 
         $update = new SQLCommand($sql, $conn, $execute = true);
@@ -36,7 +38,7 @@ if (isset($_POST["check"])) {
 
     } else {
         //Bestaat id niet, doe een insert
-        $sc = new SQLCommand($sql = "insert into accounts.list SET lis_user_id='$userid',lis_theme='$theme' , lis_subject='$subject' , lis_place='$place' , lis_description='$description' ", $conn, $execute = true);
+        $sc = new SQLCommand($sql = "insert into accounts.list SET lis_user_id='$userid',lis_theme='$theme' , lis_subject='$subject' , lis_place='$place' , lis_description='$description', lis_link='$link' ", $conn, $execute = true);
         header('Location:' . ROOT_URL . 'home.php');
 
     }

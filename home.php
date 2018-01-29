@@ -1,7 +1,9 @@
 <?php
 require_once("php/database_functions.php");
 require_once("php/update_list.php");
+require_once("php/deleteUser.php");
 require_once("php/is_authenticated.php");
+
 
 if (isset($_GET["list_id_upd"])) {
     //Ophalen van list-items
@@ -15,8 +17,8 @@ if (isset($_GET["list_id_del"])) {
 
 }
 
-if (isset($_GET["list_id_to_check"])) {
-    $checkitem = checkItem($_GET["list_id_to_check"]);
+if (isset($_GET["list_id"]) && isset($_GET["check"])) {
+    $checkitem = checkItem($_GET["list_id"], $_GET["check"]);
     header('Location:' . ROOT_URL . 'home.php');
 
 }
@@ -38,8 +40,6 @@ if (isset($_GET["list_id_to_uncheck"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="manifest" href="site.webmanifest">
-    <link rel="apple-touch-icon" href="icon.png">
-    <!-- Place favicon.ico in the root directory -->
 
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/main.css">
@@ -80,12 +80,15 @@ if (isset($_GET["list_id_to_uncheck"])) {
 
 <script src="js/hamburger.js"></script>
 <script src="js/carousel.js"></script>
+<script src="js/scrollToTop.js"></script>
+<script src="js/hideForm.js"></script>
 
 <header>
 
 </header>
+
 <main>
-    <div class="container" id="formhome">
+    <div class="container">
         <div class="row">
             <div class="col-xs-3 col-sm-3 col-md-1 col-lg-1">
                 <img class="logo responsive" src="img/logo/logo04Black.png" alt="logo">
@@ -101,12 +104,14 @@ if (isset($_GET["list_id_to_uncheck"])) {
                         <span></span>
                     </button>
                     <div class="dropdown-menu">
-                        <a href="php/logout.php">Log out</a>
+                        <a class="dropdown-item" href="php/logout.php">Log out</a><br>
+                        <a class="dropdown-item" href="<?php echo ROOT_URL ?>home.php?user-id=<?php echo $row->id ?>">Delete
+                            account</a>
                     </div>
                 </div>
             </div>
         </div>
-        <br>
+        <br><br>
 
         <hr>
 
@@ -161,9 +166,9 @@ if (isset($_GET["list_id_to_uncheck"])) {
                         <?php } ?>
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="subject">Subject</label>
+                        <label for="subject">Subject<sup>*</sup></label>
                         <input type="text" class="form-input" name="subject" placeholder="Subject"
-                               value="<?php echo $list_item["subject"] ?>">
+                               value="<?php echo $list_item["subject"] ?>" required>
                     </div>
                 </div>
                 <div class="row">
@@ -173,7 +178,8 @@ if (isset($_GET["list_id_to_uncheck"])) {
                                value="<?php echo $list_item["place"] ?>">
                     </div>
                     <div class="col-md-6 text-right">
-                        <button type="submit" name="check" class="btn btn-default btn-lg">
+                        <button type="submit" name="check" class="btn btn-default btn-lg" data-toggle="tooltip"
+                                title="Send">
                             <span class="glyphicon glyphicon-arrow-right"></span>
                         </button>
                     </div>
@@ -185,95 +191,25 @@ if (isset($_GET["list_id_to_uncheck"])) {
                                   placeholder="Description"><?php echo $list_item["description"] ?></textarea>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label for="link">Link</label>
+                        <textarea class="form-input" name="link"
+                                  placeholder="Link"><?php echo $list_item["link"] ?></textarea>
+                    </div>
+                </div>
             </form>
         </div>
     </div>
     <div class="container" id="themegallery">
-        <hr>
-        <!--
-        <div class="row">
-            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                <a class="info" href="#">
-                    <div class="hovereffect">
-                        <img class="img-rounded responsive image" src="img/themes/travelb.jpg" alt="Card image cap">
-                        <div class="middle">
-                            <h2 class="text">Travel</h2>
-                        </div>
-                    </div>
-                </a>
-            </div>
 
-            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                <a class="info" href="#">
-                    <div class="hovereffect">
-                        <img class="img-rounded responsive image" src="img/themes/fooddrinksb.jpg" alt="Card image cap">
-                        <div class="middle">
-                            <h2 class="text">Food & drinks</h2>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                <a class="info" href="#">
-                    <div class="hovereffect">
-                        <img class="img-rounded responsive image" src="img/themes/relationb.jpg" alt="Card image cap">
-                        <div class="middle">
-                            <h2 class="text">Relation</h2>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                <a class="info" href="#">
-                    <div class="hovereffect">
-                        <img class="img-rounded responsive image" src="img/themes/visitingb.jpg" alt="Card image cap">
-                        <div class="middle">
-                            <h2 class="text">Visiting</h2>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                <a class="info" href="#">
-                    <div class="hovereffect">
-                        <img class="img-rounded responsive image" src="img/themes/sportb.jpg" alt="Card image cap">
-                        <div class="middle">
-                            <h2 class="text">Sport</h2>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                <a class="info" href="#">
-                    <div class="hovereffect">
-                        <img class="img-rounded responsive image" src="img/themes/randomb.jpg" alt="Card image cap">
-                        <div class="middle">
-                            <h2 class="text">Random</h2>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                <a class="info" href="#">
-                    <div class="hovereffect">
-                        <img class="img-rounded responsive image" src="img/themes/adventureb.jpg" alt="Card image cap">
-                        <div class="middle">
-                            <h2 class="text">Adventure</h2>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                <a class="info" href="#">
-                    <div class="hovereffect">
-                        <img class="img-rounded responsive image" src="img/themes/careerb.jpg" alt="Card image cap">
-                        <div class="middle">
-                            <h2 class="text">Career</h2>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>-->
+        <div class="hr"></div>
+
+        <div class="row wrapper">
+
+
+        </div>
+
         <div class="row">
             <div class="col-md-12 text-center">
                 <h4 id="themetitle">&nbsp;<span></span></h4>
@@ -281,6 +217,14 @@ if (isset($_GET["list_id_to_uncheck"])) {
         </div>
 
         <section class="regular slider">
+            <div class="themawrapper" data-thema="All">
+
+                <div class="hovereffect">
+                    <img class="img-rounded responsive image" src="img/themes/allb.jpg" alt="Card image cap">
+                </div>
+
+            </div>
+
             <div class="themawrapper" data-thema="Travel">
 
                 <div class="hovereffect">
@@ -340,36 +284,47 @@ if (isset($_GET["list_id_to_uncheck"])) {
         </section>
 
 
-        <div class="row">
-            <div class="col-md-12">
+        <div class="row listbackground">
+            <div class="col-md-12 ">
                 <div class="list">
                     <?php
                     $userid = $_SESSION['user_id'];
-                    $ds1 = new DataSet($sql = "SELECT * FROM list WHERE lis_user_id = '$userid'", $conn, $load = true);
+                    $ds1 = new DataSet($sql = "SELECT * FROM list WHERE lis_user_id = '$userid'", $conn, $load = true); ?>
+                    <?php if (count($ds1->rows) == 0) {
+                        print "<h5 class='text-center'>Your list is empty!</h5>";
+                    } ?>
+                    <?php
                     foreach ($ds1->rows as $row) {
                         $date = date('j F', strtotime($row["lis_date"]));
                         $year = date('Y', strtotime($row["lis_date"]));
                         $rowDone = $row["lis_done"]; ?>
                         <div class="row <?= $row["lis_theme"] ?>">
-                            <div class="col-xs-3 col-md-2">
+                            <div class="col-xs-4 col-md-2">
                                 <p class="date"><?php echo $date ?></p>
-                                <hr style="border-color: #FFF; width: 40%;">
+                                <hr style="border-color: #FFF; width: 40%; margin-left: 10px">
                                 <p class="date"><?php echo $year ?></p>
                             </div>
-                            <div class="col-xs-9 col-md-8">
+                            <div class="col-xs-8 col-md-7">
                                 <?php if ($rowDone == 0) { ?>
-                                    <h4><?php echo "=== " . $row["lis_subject"] . " ===" ?></h4>
+                                    <h4><?php echo $row["lis_subject"] ?></h4>
                                 <?php } else { ?>
                                     <h4 class="strikethrough">
-                                        <span><?php echo "=== " . $row["lis_subject"] . " ===" ?></span></h4>
+                                        <span><?php echo $row["lis_subject"] ?></span></h4>
                                 <?php } ?>
-                                <p><?php echo $row["lis_place"] . " - " . $row["lis_theme"] ?></p>
-                                <p><?php echo $row["lis_description"] . " " . "(" . $row["lis_id"] . ")"; ?></p>
-
-
+                                <div class="col-md-6 description">
+                                    <p><?php echo $row["lis_place"] . " - " . $row["lis_theme"] ?></p>
+                                </div>
+                                <div class="col-md-6 description">
+                                    <p><?php echo $row["lis_description"]; ?></p>
+                                    <br>
+                                    <?php if (count($row["lis_link"]) == !0) { ?>
+                                        <a href="<?php echo $row["lis_link"]; ?>">Check here for more info</a>
+                                    <?php } ?>
+                                </div>
                             </div>
-                            <div class="col-xs-12 col-md-2">
-                                <div class="text-right">
+
+                            <div class="col-xs-12 col-md-3">
+                                <div class="flow">
                                     <p>
                                         <a href="<?php echo ROOT_URL ?>home.php?list_id_upd=<?php echo $row["lis_id"] ?>">
                                             <span class="glyphicon glyphicon-wrench"></span></a>
@@ -380,14 +335,9 @@ if (isset($_GET["list_id_to_uncheck"])) {
                                     </p>
 
                                     <p>
-                                        <a href="<?php echo ROOT_URL ?>home.php?list_id_to_check=<?php echo $row["lis_id"] ?>">
-                                            <span class="glyphicon glyphicon-unchecked"></span></a>
+                                        <a href="<?php echo ROOT_URL ?>home.php?list_id=<?php echo $row["lis_id"] ?>&check=<?= $row["lis_done"] ? 0 : 1 ?>">
+                                            <span class="glyphicon glyphicon-<?= $row["lis_done"] ? "check" : "unchecked" ?>"></span></a>
                                     </p>
-                                    <p>
-                                        <a href="<?php echo ROOT_URL ?>home.php?list_id_to_uncheck=<?php echo $row["lis_id"] ?>">
-                                            <span class="glyphicon glyphicon-check"></span></a>
-                                    </p>
-
 
                                 </div>
                             </div>
@@ -397,8 +347,26 @@ if (isset($_GET["list_id_to_uncheck"])) {
                 </div>
             </div>
         </div>
+        <button id="topBtn" title="Go to top">Top</button>
     </div>
 </main>
+<footer>
+    <div class="container">
+        <hr>
+        <div class="row">
+            <div class="col-xs-3 col-sm-3 col-md-1 col-lg-1">
+                <img class="logo responsive" src="img/logo/logo04Black.png" alt="logo">
+            </div>
+            <div class="col-md-3">
+                <p>Created by: <strong>M. Humbeeck</strong></p>
+                <p>Contact information: <a
+                            href="mailto:&#104;&#117;&#109;&#098;&#101;&#101;&#099;&#107;&#046;&#109;&#105;&#107;&#101;&#064;&#103;&#109;&#097;&#105;&#108;&#046;&#099;&#111;&#109;">
+                        &#104;&#117;&#109;&#098;&#101;&#101;&#099;&#107;&#046;&#109;&#105;&#107;&#101;&#064;&#103;&#109;&#097;&#105;&#108;&#046;&#099;&#111;&#109;</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
 </body>
 </html>
 <?php

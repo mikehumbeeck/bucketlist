@@ -22,6 +22,10 @@
     text-align: center;
 }
 
+.input-group input {
+    color: #fff;
+}
+
 .control-label {
     padding-top: 10px;
 }
@@ -30,8 +34,21 @@
     padding-top: 15px;
     padding-bottom: 15px;
     text-align: center;
+    }
+
+.boxsubmit button {
+    -webkit-transition: background-color .5s ease-out;
+    -moz-transition: background-color .5s ease-out;
+    -o-transition: background-color .5s ease-out;
+    transition: background-color .5s ease-out;
 }
 
-.carousel-inner img {
-    width: 100%;
+.boxsubmit button:hover {
+    background-color: #337ab7;
+    border-color: #337ab7;
+}
+
+.showPass {
+    margin: 10px 0;
+    color: #fff;
 }

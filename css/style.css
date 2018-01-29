@@ -17,7 +17,7 @@ form {
     margin: 0 auto;
     padding: 60px 40px;
     box-sizing: border-box;
-    background: rgba(0,0,0,.5);
+    background: rgba(0, 0, 0, .5);
 }
 
 .box-title {
@@ -33,6 +33,7 @@ label {
     font-weight: bold;
     color: #FFF;
 }
+
 .form-input {
     display: block;
     width: 60%;
@@ -50,12 +51,16 @@ label {
     height: 40px;
     background-color: transparent !important;
 }
+
 .input-group-addon {
     color: #FFF !important;
     background-color: transparent !important;
     border: none !important;
 }
-::placeholder {rgba(255, 255, 255, .5)}
+
+::placeholder {
+rgba(255, 255, 255, .5)
+}
 
 form input[type="submit"] {
     border: none;
@@ -63,6 +68,71 @@ form input[type="submit"] {
     height: 40px;
     color: #FFF;
     font-size: 16px;
+}
+
+/*Line hr to hide form*/
+
+div.hr {
+    width: 100%;
+    height: 1px;
+    background: #7F7F7F;
+    position: relative;
+    margin: 25px 0;
+}
+
+div.hr:after {
+    content: '';
+    position: absolute;
+    border-style: solid;
+    border-width: 0 15px 15px;
+    border-color: #FFFFFF transparent;
+    display: block;
+    width: 0;
+    z-index: 1;
+    top: -14px;
+    left: 50%;
+}
+
+div.hr:before {
+    content: '';
+    position: absolute;
+    border-style: solid;
+    border-width: 0 15px 15px;
+    border-color: black transparent;
+    display: block;
+    width: 0;
+    z-index: 1;
+    top: -15px;
+    left: 50%;
+}
+
+div.hr:hover {
+    background: #337ab7;
+    border: 1px solid #337ab7;
+}
+
+/*Spinny wrapper*/
+
+
+
+/*Button to top*/
+
+#topBtn {
+    position: fixed; /* Fixed/sticky position */
+    bottom: 20px; /* Place the button at the bottom of the page */
+    right: 30px; /* Place the button 30px from the right */
+    z-index: 99; /* Make sure it does not overlap */
+    border: none; /* Remove borders */
+    outline: none; /* Remove outline */
+    background-color: black; /* Set a background color */
+    color: white; /* Text color */
+    cursor: pointer; /* Add a mouse pointer on hover */
+    padding: 15px; /* Some padding */
+    border-radius: 10px; /* Rounded corners */
+}
+
+#topBtn:hover {
+    background-color: #337ab7; /* Add a dark-grey background on hover */
 }
 
 

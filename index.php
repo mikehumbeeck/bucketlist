@@ -8,8 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="manifest" href="site.webmanifest">
-    <link rel="apple-touch-icon" href="icon.png">
-    <!-- Place favicon.ico in the root directory -->
 
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/main.css">
@@ -52,26 +50,19 @@
                 <div class="box-title">Welcome</div>
             </div>
             <form action="php/check_login.php" method="post" role="form">
-                <div class="input-group">
+                <div class="input-group col-xs-12 col-md-12">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                    <input type="text" class="form-control" name="email" value=""
+                    <input type="email" class="form-control" name="email" value=""
                            placeholder="email">
                 </div>
-                <div class="input-group">
+                <div class="input-group col-xs-12 col-md-12">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                    <input type="password" class="form-control" name="password"
+                    <input type="password" class="form-control" id="passwordInput" name="password"
                            placeholder="password">
                 </div>
-
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label>
-                            <input id="login-remember" type="checkbox" name="remember" value="1"> Remember
-                            me
-                        </label>
-                    </div>
+                <div class="col-xs-12 col-md-12 showPass">
+                    <input type="checkbox" id="" onclick="myFunction()"> Show password
                 </div>
-
 
                 <!-- Button -->
 
