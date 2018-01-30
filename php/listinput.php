@@ -2,7 +2,8 @@
 require_once("database_functions.php");
 require_once("is_authenticated.php");
 
-
+/*
+ * Alle inputs uit de form worden in variabele gestoken wanneer check-button wordt ingedrukt*/
 if (isset($_POST["check"])) {
     $theme = $_POST["theme"];
     $subject = $_POST["subject"];
@@ -12,7 +13,7 @@ if (isset($_POST["check"])) {
 
     $userid = $_SESSION['user_id'];//gehaald uit check_login.php
 
-    //controleren of listid bestaat in DB
+    //controleren of listid al bestaat in DB
     if (isset($_POST["listid"])) {
         //Zoja voer een updatequery uit
         $listid = $_POST["listid"];

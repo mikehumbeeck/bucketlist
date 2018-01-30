@@ -11,16 +11,17 @@
 }
 
 .list .row {
-    background: #337ab7;
+    background: #6b969d;
     padding: 5px 0;
     margin-bottom: 10px;
     min-height: 150px;
 }
 
-.list .row:nth-of-type(even) {
-    background: rgba(0,0,0,.5);
-
+.list .row.done{
+    background: rgba(0, 153, 0, 0.6);
 }
+
+
 
 .list .date {
     margin: 15px 0 0 10px;
@@ -43,6 +44,7 @@
 
 .list .description {
     margin-left: -15px;
+    margin-bottom: 10px;
 }
 
 
@@ -62,9 +64,6 @@
     align-self: flex-end;
     margin-top: 10px;
 
-}
-
-.list .flow p{
 }
 
 

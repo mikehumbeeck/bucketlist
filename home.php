@@ -4,28 +4,53 @@ require_once("php/update_list.php");
 require_once("php/deleteUser.php");
 require_once("php/is_authenticated.php");
 
-
+/*
+ * Is er list_id_upd ingevuld in de link?
+ * Zoja, functie om die item op te halen wordt uitgevoerd en in een nieuwe variabele gestoken.
+ * $list_item wordt ingevuld in het formulier om te kunnen wijzigen
+*/
 if (isset($_GET["list_id_upd"])) {
     //Ophalen van list-items
     $list_item = getlistitem($_GET["list_id_upd"]);
     //List item gebruiken om formulier in te vullen in formulier
-
 }
-if (isset($_GET["list_id_del"])) {
-    $delitem = deletelistitem($_GET["list_id_del"]);
-    header('Location:' . ROOT_URL . 'home.php');
 
+/*
+ * Is er een list_id_del ingevuld in de link
+ * Zoja, wordt de functie uitgevoerd dat ervoor zorgt dat die item wordt verwijderd
+ * Als deze gebeurd is gaat men terug naar de home-page, anders error
+*/
+if (isset($_GET["list_id_del"])) {
+    if (deletelistitem($_GET["list_id_del"])) {
+        header('Location:' . ROOT_URL . 'home.php');
+    } else {
+        print "Delete-error";
+        //Of naar een error-page gaan
+    }
 }
 
 if (isset($_GET["list_id"]) && isset($_GET["check"])) {
-    $checkitem = checkItem($_GET["list_id"], $_GET["check"]);
-    header('Location:' . ROOT_URL . 'home.php');
-
+    if (checkItem($_GET["list_id"], $_GET["check"])) {
+        header('Location:' . ROOT_URL . 'home.php');
+    } else {
+        print "Check-item error";
+    }
 }
 
 if (isset($_GET["list_id_to_uncheck"])) {
-    $uncheckitem = uncheckItem($_GET["list_id_to_uncheck"]);
-    header('Location:' . ROOT_URL . 'home.php');
+    if (uncheckItem($_GET["list_id_to_uncheck"])) {
+        header('Location:' . ROOT_URL . 'home.php');
+    } else {
+        print "Uncheck-item error";
+    }
+}
+
+if (isset($_GET["user_id_del"])) {
+    if (deleteUser($_GET["user_id_del"])) {
+        header('Location:' . ROOT_URL);
+    } else {
+        print "User is not deleted!";
+    }
 }
 ?>
 
@@ -35,7 +60,7 @@ if (isset($_GET["list_id_to_uncheck"])) {
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title></title>
+    <title>My Bucketlist</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -74,20 +99,19 @@ if (isset($_GET["list_id_to_uncheck"])) {
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
 
+<!-- jQuery from internet-->
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script type="text/javascript" src="slick/slick.min.js"></script>
 
+<!-- Own jQuery-->
 <script src="js/hamburger.js"></script>
 <script src="js/carousel.js"></script>
 <script src="js/scrollToTop.js"></script>
 <script src="js/hideForm.js"></script>
+<script src="js/deleteconfirmation.js"></script>
 
 <header>
-
-</header>
-
-<main>
     <div class="container">
         <div class="row">
             <div class="col-xs-3 col-sm-3 col-md-1 col-lg-1">
@@ -105,12 +129,27 @@ if (isset($_GET["list_id_to_uncheck"])) {
                     </button>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="php/logout.php">Log out</a><br>
-                        <a class="dropdown-item" href="<?php echo ROOT_URL ?>home.php?user-id=<?php echo $row->id ?>">Delete
-                            account</a>
+
+                        <a id="deleteUser" class="dropdown-item">Delete account</a>
+
                     </div>
                 </div>
             </div>
         </div>
+        <div class="popup">
+            <p>Do you want to delete your account?!</p>
+            <div class="options">
+                <a class="deleteCancel" href="#">Cancel</a>
+                <a href="<?php echo ROOT_URL ?>home.php?user_id_del=<?php echo $_SESSION['user_id'] ?>">Delete</a>
+            </div>
+        </div>
+    </div>
+    <div class="cover"></div>
+</header>
+
+<main>
+    <div class="container">
+
         <br><br>
 
         <hr>
@@ -194,21 +233,35 @@ if (isset($_GET["list_id_to_uncheck"])) {
                 <div class="row">
                     <div class="form-group col-md-12">
                         <label for="link">Link</label>
-                        <textarea class="form-input" name="link"
-                                  placeholder="Link"><?php echo $list_item["link"] ?></textarea>
+                        <input type="url" class="form-input" name="link" placeholder="Link"
+                               value="<?php echo $list_item["link"] ?>">
+
                     </div>
                 </div>
             </form>
         </div>
     </div>
-    <div class="container" id="themegallery">
 
+    <div class="container" id="themegallery">
         <div class="hr"></div>
 
-        <div class="row wrapper">
+        <section class="rw-wrapper">
+            <h2 class="rw-sentence">
+                <div class="rw-words rw-words-1">
+                    <span>Create</span>
+                    <span>Plan</span>
+                    <span>Enjoy</span>
+                </div>
+                <br/>
+                <span>your adventure!</span>
 
-
-        </div>
+                <div class="rw-words rw-words-2">
+                    <span>And write it down</span>
+                    <span>And look forward</span>
+                    <span>And never regret</span>
+                </div>
+            </h2>
+        </section>
 
         <div class="row">
             <div class="col-md-12 text-center">
@@ -288,6 +341,9 @@ if (isset($_GET["list_id_to_uncheck"])) {
             <div class="col-md-12 ">
                 <div class="list">
                     <?php
+                    /*
+                     * Alles rijen met die user_id worden in een veriabele gestoken en worden overlopen en afgeprint met de foreach
+                     * Verder worden hierop allerlei toepassingen gedaan*/
                     $userid = $_SESSION['user_id'];
                     $ds1 = new DataSet($sql = "SELECT * FROM list WHERE lis_user_id = '$userid'", $conn, $load = true); ?>
                     <?php if (count($ds1->rows) == 0) {
@@ -298,7 +354,8 @@ if (isset($_GET["list_id_to_uncheck"])) {
                         $date = date('j F', strtotime($row["lis_date"]));
                         $year = date('Y', strtotime($row["lis_date"]));
                         $rowDone = $row["lis_done"]; ?>
-                        <div class="row <?= $row["lis_theme"] ?>">
+                        <div class="row <?= $row["lis_theme"];
+                        echo $rowDone ? ' done' : ''; ?>">
                             <div class="col-xs-4 col-md-2">
                                 <p class="date"><?php echo $date ?></p>
                                 <hr style="border-color: #FFF; width: 40%; margin-left: 10px">
@@ -308,7 +365,7 @@ if (isset($_GET["list_id_to_uncheck"])) {
                                 <?php if ($rowDone == 0) { ?>
                                     <h4><?php echo $row["lis_subject"] ?></h4>
                                 <?php } else { ?>
-                                    <h4 class="strikethrough">
+                                    <h4 id="checkList" class="strikethrough">
                                         <span><?php echo $row["lis_subject"] ?></span></h4>
                                 <?php } ?>
                                 <div class="col-md-6 description">
@@ -317,7 +374,7 @@ if (isset($_GET["list_id_to_uncheck"])) {
                                 <div class="col-md-6 description">
                                     <p><?php echo $row["lis_description"]; ?></p>
                                     <br>
-                                    <?php if (count($row["lis_link"]) == !0) { ?>
+                                    <?php if (!empty(($row["lis_link"]))) { ?>
                                         <a href="<?php echo $row["lis_link"]; ?>">Check here for more info</a>
                                     <?php } ?>
                                 </div>
@@ -336,7 +393,8 @@ if (isset($_GET["list_id_to_uncheck"])) {
 
                                     <p>
                                         <a href="<?php echo ROOT_URL ?>home.php?list_id=<?php echo $row["lis_id"] ?>&check=<?= $row["lis_done"] ? 0 : 1 ?>">
-                                            <span class="glyphicon glyphicon-<?= $row["lis_done"] ? "check" : "unchecked" ?>"></span></a>
+                                            <span id="checkListButton"
+                                                  class="glyphicon glyphicon-<?= $row["lis_done"] ? "check" : "unchecked" ?>"></span></a>
                                     </p>
 
                                 </div>

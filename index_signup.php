@@ -77,7 +77,6 @@
 
                 </div>
 
-
                 <!-- Button -->
                 <div class="boxsubmit">
                     <button type="submit" name="register" class="btn btn-default">Register

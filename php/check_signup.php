@@ -5,7 +5,7 @@ if (isset($_POST["register"])) {
     $lastName = $_POST["lastname"];
     $email = $_POST["email"];
     $password = $_POST["password"];
-    $hashtpwd = password_hash($password,PASSWORD_DEFAULT);
+    $hashtpwd = password_hash($password, PASSWORD_DEFAULT);
 
     $userexcist = new SQLCommand($sql = "select * from accounts.users where email = '$email'", $conn, $execute = true);
 
@@ -22,13 +22,6 @@ if (isset($_POST["register"])) {
             die("Database query failed. " . mysqli_error($conn));
         }
     }
-    print "Welcome " . $_POST["firstname"] . "<br>";
-    print "Your email address is: " . $_POST["email"] . "<br>";
-
-
-
-
-
 }
 ?>
 

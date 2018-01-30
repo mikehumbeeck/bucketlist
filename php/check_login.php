@@ -16,10 +16,6 @@ $ds1 = new DataSet("SELECT * FROM accounts.users WHERE email='$email'", $conn, $
 $user_data = $ds1->rows;
 $pwdcheck = password_verify($user_password, $user_data[0]['password']);//return true of false
 
-//print $sql ."<br>";
-
-
-//$aantal_rijen = count($ds1->rows);//rows van de dataset
 
 if (count($ds1->rows) == 0) {
     print "Foutieve login of wachtwoord";
@@ -35,7 +31,7 @@ foreach ( $ds1->rows as $row) {
         header('Location:' . ROOT_URL . 'home.php');
     }
     else {
-        echo 'error';
+        echo 'error - Go back and try again!';
     }
 }
 ?>
